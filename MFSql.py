@@ -46,14 +46,16 @@ class Users(Base):
 class Status(Base):
     __tablename__ = 'status'
     
+    comment_count =Column(Integer)
     status_id = Column(BigInteger,primary_key=True)
     message = Column(String(300))
     stime = Column(DateTime)
-    uid=Column(Integer)
-    def __init__(self,status_id,message,time,uid):
+    uid=Column(BigInteger)
+    def __init__(self,status_id,message,time,uid,comment_count):
         self.status_id=status_id
         self.message=message
         self.uid=uid
+        self.comment_count=comment_count
         self.stime=time
 class Comments(Base):
     
@@ -61,15 +63,14 @@ class Comments(Base):
     
     uid = Column(BigInteger,primary_key=True)
     name =Column(String(40))
-    tinyurl = Column(String(200))
     comment_id = Column(Integer)
-    time = Column(DateTime)
+    ctime = Column(DateTime)
     text = Column(String(500))
-    def __init__(self,uid,name,tinyurl,comment_id,time,text):
+    def __init__(self,uid,name,comment_id,time,text):
         self.uid=uid
-        self,name=name
+        self.name=name
         self.comment_id=comment_id
-        self.time=time
+        self.ctime=time
         self.text=text
 class Emoticons(Base):
     __tablename__='emoticons'

@@ -32,7 +32,8 @@ RR_STATUS_GETEMOTICONS = {"method": "status.getEmoticons", "format": "json",'typ
 RR_USERS_GETINFO={"method":"users.getInfo","format":"json"}
 RR_FRIENDS_GETFRIENDS= {"method": "friends.getFriends", "fields": "name,tinyurl",'page':'1','count':'3000'}
 RR_STATUS_GET={"method":"status.gets","page":'1','count':'1000'}
+RR_STATUS_GETCOMMENT={"method":"status.getComment",'status_id':'','owner_id':'',"format":'json','count':'200'}
+
 
 db = create_engine('mysql://%s:%s@localhost/%s'% (DATABASE_USER,DATABASE_PWD,DATABASE_NAME),connect_args={'charset':'utf8'},echo=True )
-Session = sessionmaker(bind=db)
-db_session=Session()
+

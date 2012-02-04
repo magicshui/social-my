@@ -42,7 +42,8 @@ class view_login_renren(MethodView):
 # 3 generate the user into database
 class view_oauthed_renren(MethodView):
     def get(self):
-            
+            dbSession = sessionmaker(bind=db)
+            db_session=dbSession()
             verfication_code=request.args.get("code")
             args=dict(client_id=RENREN_APP_API_KEY)
             args["client_secret"] = RENREN_APP_SECRET_KEY
@@ -87,7 +88,16 @@ class view_user_friends_renren_all(MethodView):
        _w.save_friends(r)
            
        return render_template('user_friends_all.html',r=r) 
+class view_user_comments_renren_get(MethodView):
+    def get(self):
+        dbSession = sessionmaker(bind=db)
+        db_session=dbSession()
+        x=[y.status_id for y in db_session.query(Status).filter(Status.comment_count != 1)]
+        _w=Workers()
+        #r=_w._get_comment(session['t'], session['uid'], x.status_id)
+        r=_w.get_save_comments(session['t'],session['uid'],x)
         
+        return render_template('response.html',r=r)
         
 
 
