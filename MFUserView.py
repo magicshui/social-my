@@ -112,6 +112,7 @@ class view_user_visitor_renren_get(MethodView):
 
 class view_ana(MethodView):
     def get(self):
+        raise
         _w=Workers()
         _status=_w.get_status(session['uid'], session['t'])
         _albums=_w.get_albums(session['t'], session['uid'])
@@ -122,4 +123,21 @@ class view_ana(MethodView):
         _w._save(_blogs)
         _w._save(_friends)
         return render_template('response.html',r='ok')
+class view_lashou(MethodView):
+    def get(self):
+        dbSession = sessionmaker(bind=db)
+        db_session=dbSession()
+        r=db_session.query(Friends).filter(Friends.mid==session['uid'])
+        i=0
+        
+        for x in r:
+            i+=1
+        return render_template('lashou.html',r=(i*1.7/400))
+class view_all_status(MethodView):
+    def get(self):
+        dbSession = sessionmaker(bind=db)
+        db_session=dbSession()
+        r=db_session.query(Status).filter(Status.uid==session['uid'])
+        
+        return render_template('status.html',r=r)
 

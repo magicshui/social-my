@@ -4,6 +4,7 @@ Created on 2012-1-23
 
 @author: AolneShui
 '''
+from flask import *
 from sqlalchemy import *
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker

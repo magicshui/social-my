@@ -48,14 +48,7 @@ class Workers():
         except sqlalchemy.exc.IntegrityError:
            return False
     def _save_albums(self,r):
-        try:
-           dbSession = sessionmaker(bind=db)
-           db_session=dbSession()
-           db_session.add_all(r)
-           db_session.commit()
-           return True
-        except sqlalchemy.exc.IntegrityError:
-           return False
+        self._save(r)
     
     def get_visitors(self,token,mid):
         _r =RRClient()
@@ -70,14 +63,8 @@ class Workers():
             r.append(f)
         return r
     def save_friends(self,r):
-         try:
-           dbSession = sessionmaker(bind=db)
-           db_session=dbSession()
-           db_session.add_all(r)
-           db_session.commit()
-           return True
-         except sqlalchemy.exc.IntegrityError:
-           return False
+                self._save(r)
+
     def get_status(self,uid,token):
         _r=RRClient()
         response=_r.get_with_out_session(token,RR_STATUS_GET.copy())
@@ -87,15 +74,8 @@ class Workers():
             r.append(f)
         return r
     def save_status(self,r):
-        try:
-            dbSession = sessionmaker(bind=db)
-            db_session=dbSession()
-            db_session.add_all(r)
-            db_session.commit()
-            return True
-        except sqlalchemy.exc.InvalidRequestError:
-            print 'exist'
-            return False
+                self._save(r)
+
     def _get_comment(self,token,uid,status_id):
         _r=RRClient()
         params=RR_STATUS_GETCOMMENT.copy()
@@ -108,17 +88,8 @@ class Workers():
             r.append(f)
         return r
     def _save_comments(self,r):
-        try:
-            dbSession = sessionmaker(bind=db)
-            db_session=dbSession()
-            db_session.add_all(r)
-            db_session.commit()
-            return True
-        except sqlalchemy.exc.InvalidRequestError:
-            print 'exist'
-            return False
-        except sqlalchemy.exc.IntegrityError:
-            return False
+                self._save(r)
+
     def get_save_comments(self,token,uid,status_list):
         
         for x in status_list:

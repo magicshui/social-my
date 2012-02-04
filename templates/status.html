@@ -152,7 +152,7 @@ function _show_status()
 		<h2 name="friends"><a name="friends">Friends</a></h2>
 		<ul class="mdt3">
 			 {% for item in r %}
-                <dl class='ob'><dt><a class='the_img'><img src='{{ item.tinyurl }}' class='m_sub_img'></a></dt></dl>
+				<dl>{{ item.stime}}:{{ item.message }}</dl>
               {% endfor %}
 		</ul>
 		
