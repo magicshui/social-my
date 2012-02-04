@@ -1,28 +1,23 @@
 # -*- coding: utf-8 -*-
-'''
-Created on 2012-1-22
 
-@author: AolneShui
-'''
 from functools import wraps
 from flask import g,request,render_template,redirect,url_for
-from User_Oauth import *
-from CmdView import *
-from AdminViews import *
+
+from MFConfig import *
+from MFUserView import *
+
+
 app = Flask(__name__)
 app.debug=True
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
-
+# views
+login_renren_view = view_login_renren.as_view('login_renren_view')
+oauthed_renren_view=view_oauthed_renren.as_view('oauthed_renren_view')
+oauth_failed_renren_view =view_oauth_failed_renren.as_view('oauth_failed_view')
 # url views
-user_oauth_login_view = LoginView.as_view("login_view")
-user_oauth_url_view = OAuth.as_view('oauth_url')
-cmd_view = CmdView.as_view('cmd_view')
-admin_emoticons_view =EmoticonsAll.as_view('admin_emoticons_view')
-# url rules
-app.add_url_rule('/user/oauth',  view_func=user_oauth_url_view)
-app.add_url_rule('/user/oauthlogin',  view_func=user_oauth_login_view)
-app.add_url_rule('/cmd',view_func = cmd_view )
-app.add_url_rule('/admin/emoticons',view_func=admin_emoticons_view)
+app.add_url_rule('/login',view_func=login_renren_view)
+app.add_url_rule('/user/oauthlogin',view_func=oauthed_renren_view)
+app.add_url_rule('/oauth/fail',view_func=oauth_failed_renren_view)
 if __name__=='__main__':
     app.run()
     

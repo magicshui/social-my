@@ -4,12 +4,11 @@ from sqlhelper import *
 from Renren_Oauth import *
 from urllib import *
 from config import *
+from MFUtils import *
 class EmoticonsAll(MethodView):
     def get(self):
-        access_token=session['a_t']
-        params = {"method": "status.getEmoticons", "format": "json",'type':'all'}
-        api_client = RenRenAPIClient(access_token, RENREN_APP_API_KEY, RENREN_APP_SECRET_KEY)
-        response = api_client.request(params)
+        
+        response =  RRClient.get_with_session(RR_STATUS_GETEMOTICONS)
         
         return render_template('admin_emoticons_all.html',v=response)
         

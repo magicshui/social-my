@@ -9,7 +9,7 @@ import logging
 import os.path
 import time
 import urllib
-from config import *
+from MFConfig import *
 # Find a JSON parser
 try:
     import json
