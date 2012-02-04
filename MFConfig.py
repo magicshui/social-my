@@ -29,6 +29,7 @@ DATABASE_NAME= 'renrenbook'
 # renren apis
 RR_STATUS_GETEMOTICONS = {"method": "status.getEmoticons", "format": "json",'type':'all'}
 RR_USERS_GETINFO={"method":"users.getInfo","format":"json"}
+RR_FRIENDS_GETFRIENDS= {"method": "friends.getFriends", "fields": "name,tinyurl",'page':'1','count':'3000'}
 
 
 db = create_engine('mysql://%s:%s@localhost/%s'% (DATABASE_USER,DATABASE_PWD,DATABASE_NAME),connect_args={'charset':'utf8'},echo=True )

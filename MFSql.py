@@ -9,8 +9,22 @@ class Praser():
                           response[0]['name'], 
                           response[0]['tinyurl'],
                           datetime.now(),
-                        datetime.now(), token)
+                         token)
         return r
+    def to_friends(self,response,token):
+        pass
+class Friends(Base):
+    __tablename__='friends'
+    uid = Column(Integer,primary_key=True)
+    name=Column(String(40))
+    tinyurl=Column(String(100))
+    headurl=Column(String(200))
+    def __init__(self,uid,name,tinyurl,headurl):
+        self.uid=uid
+        self.name=name
+        self.headurl=headurl
+        self.tinyurl=tinyurl
+
 class Users(Base):
     __tablename__ = 'users'
     
@@ -19,12 +33,12 @@ class Users(Base):
     tinyurl = Column(String(100))
     token = Column(String(100))
     join_time = Column(DateTime)
-    last_intime=Column(DateTime)
-    def __init__(self,uid,name,tinyurl,join_time,last_time,token):
+    
+    def __init__(self,uid,name,tinyurl,join_time,token):
         self.uid=uid
         self.name=name
         self.join_time=join_time
-        self.last_intime=last_time
+      
         self.tinyurl=tinyurl
         self.token=token
 class Status(Base):
@@ -59,6 +73,7 @@ class Comments(Base):
         self.text=text
 class Emoticons(Base):
     __tablename__='emoticons'
+    
     emotion = Column(String(40),primary_key=True)
     icon=Column(String(100))
     desc= Column(String(100))

@@ -10,4 +10,4 @@ class RRClient():
         response = api_client.request(params)
         return response
     def get_with_session(self,params):
-        return self.get_with_out_session(session['a_t'], params)
+        return self.get_with_out_session(session['t'], params)

@@ -48,12 +48,10 @@ class RenRenAPIClient(object):
         
         try:
             s = file.read()
-            logging.info("api response is: " + s)
             response = _parse_json(s)
         finally:
             file.close()
         if type(response) is not list and response["error_code"]:
-            logging.info(response["error_msg"])
             raise RenRenAPIError(response["error_code"], response["error_msg"])
         return response
     def hash_params(self, params = None):
