@@ -51,7 +51,34 @@ class RenRenAPIClient(object):
             response = _parse_json(s)
         finally:
             file.close()
-        if type(response) is not list and response["error_code"]:
+        if type(response) is not list  and response["error_code"]:
+            raise RenRenAPIError(response["error_code"], response["error_msg"])
+        return response
+    def request_dict(self,params=None,v=None):
+        """Fetches the given method's response returning from RenRen API.
+
+        Send a POST request to the given method with the given params.
+        """
+        params["api_key"] = self.api_key
+        params["call_id"] = str(int(time.time() * 1000))
+        params["format"] = "json"
+        params["access_token"] = self.access_token
+        params["v"] = '1.0'
+        sig = self.hash_params(params);
+        params["sig"] = sig
+        
+        post_data = None if params is None else urllib.urlencode(params)
+        
+        #logging.info("request params are: " + str(post_data))
+        
+        file = urllib.urlopen(RENREN_API_SERVER, post_data)
+        
+        try:
+            s = file.read()
+            response = _parse_json(s)
+        finally:
+            file.close()
+        if type(response[v]) is not list  and response["error_code"]:
             raise RenRenAPIError(response["error_code"], response["error_msg"])
         return response
     def hash_params(self, params = None):

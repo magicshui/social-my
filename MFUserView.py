@@ -98,6 +98,28 @@ class view_user_comments_renren_get(MethodView):
         r=_w.get_save_comments(session['t'],session['uid'],x)
         
         return render_template('response.html',r=r)
-        
+class view_status_top_10(MethodView):
+    def get(self):
+        dbSession = sessionmaker(bind=db)
+        db_session=dbSession()
+        db_session.query(Status).filter(Status.comment_count>=1).orderby(Status.comment_count).des
+class view_user_visitor_renren_get(MethodView):
+    def get(self):
+        _w=Workers()
+        r=_w.get_visitors(session['t'],session['uid'])
+        raise 
+        return render_template('response.html',r=r)
 
+class view_ana(MethodView):
+    def get(self):
+        _w=Workers()
+        _status=_w.get_status(session['uid'], session['t'])
+        _albums=_w.get_albums(session['t'], session['uid'])
+        _blogs=_w.get_blogs(session['t'], session['uid'])
+        _friends=_w.get_friends(session['t'], session['uid'])
+        _w._save(_status)
+        _w._save(_albums)
+        _w._save(_blogs)
+        _w._save(_friends)
+        return render_template('response.html',r='ok')
 
