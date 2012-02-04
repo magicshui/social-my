@@ -34,7 +34,7 @@ except ImportError:
 # generate the login oauth url
 class view_login_renren(MethodView):
     def get(self):
-        url = "%s?client_id=%s&redirect_uri=%s&response_type=%s" % (RENREN_AUTHORIZATION_URI,CLIENT_ID,REDIRECT_URI,RESPONSE_TYPE)
+        url = "%s?client_id=%s&redirect_uri=%s&response_type=%s&scope=%s" % (RENREN_AUTHORIZATION_URI,CLIENT_ID,REDIRECT_URI,RESPONSE_TYPE,SCOPE)
         return render_template("user_oauth.html",url=url)
 # oauth success
 # 1 get user info
@@ -59,10 +59,11 @@ class view_oauthed_renren(MethodView):
             _user_response= _r.get_with_out_session(access_token, RR_USERS_GETINFO.copy())
             
             u=_p.to_user( _user_response, access_token)
+            session['uid']=u.uid
             try:
                 x=db_session.add(u)
                 db_session.commit()
-            except sqlalchemy.exc.IntegrityError:
+            except sqlalchemy.exc.IntegrityError,sqlalchemy.exc.InvalidRequestError:
                 print 'a'
             return render_template('user_oauthed.html',result=x)
 # oauth failed
@@ -75,16 +76,15 @@ class view_logined_renren(MethodView):
 
 class view_user_status_renren_get(MethodView):
     def get(self):
-        pass
+        _w=Workers()
+        r=_w.get_status('', session['t'])
+        _w.save_status(r)
+        return render_template('response.html',r=r)
 class view_user_friends_renren_all(MethodView):
     def get(self):
        _w= Workers()
-       r=_w.get_friends(session['t'])
-       try:
-           db_session.add_all(r)
-           db_session.commit()
-       except sqlalchemy.exc.IntegrityError:
-           print 'exists'
+       r=_w.get_friends(session['t'],session['uid'])
+       _w.save_friends(r)
            
        return render_template('user_friends_all.html',r=r) 
         

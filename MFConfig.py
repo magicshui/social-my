@@ -22,6 +22,7 @@ APP_SECRET = "e8e30383e1c64f92bbfd144c2f2250fa"
 CLIENT_ID = "e7427195f99e4043bb34c2b8a7c40b65"
 RESPONSE_TYPE = 'code' #固定值，请勿修改
 CODE = "code"
+SCOPE="read_user_status"
 # database 
 DATABASE_USER = 'root'
 DATABASE_PWD = 'jesuisshui'
@@ -30,7 +31,7 @@ DATABASE_NAME= 'renrenbook'
 RR_STATUS_GETEMOTICONS = {"method": "status.getEmoticons", "format": "json",'type':'all'}
 RR_USERS_GETINFO={"method":"users.getInfo","format":"json"}
 RR_FRIENDS_GETFRIENDS= {"method": "friends.getFriends", "fields": "name,tinyurl",'page':'1','count':'3000'}
-
+RR_STATUS_GET={"method":"status.gets","page":'1','count':'1000'}
 
 db = create_engine('mysql://%s:%s@localhost/%s'% (DATABASE_USER,DATABASE_PWD,DATABASE_NAME),connect_args={'charset':'utf8'},echo=True )
 Session = sessionmaker(bind=db)

@@ -15,20 +15,22 @@ class Praser():
         pass
 class Friends(Base):
     __tablename__='friends'
-    uid = Column(Integer,primary_key=True)
+    uid = Column(BigInteger,primary_key=True)
     name=Column(String(40))
     tinyurl=Column(String(100))
     headurl=Column(String(200))
-    def __init__(self,uid,name,tinyurl,headurl):
+    mid=Column(BigInteger)
+    def __init__(self,uid,name,tinyurl,headurl,mid):
         self.uid=uid
         self.name=name
         self.headurl=headurl
         self.tinyurl=tinyurl
+        self.mid=mid
 
 class Users(Base):
     __tablename__ = 'users'
     
-    uid = Column(Integer,primary_key=True)
+    uid = Column(BigInteger,primary_key=True)
     name = Column(String(40))
     tinyurl = Column(String(100))
     token = Column(String(100))
@@ -44,22 +46,20 @@ class Users(Base):
 class Status(Base):
     __tablename__ = 'status'
     
-    status_id = Column(Integer,primary_key=True)
-    comment_count = Column(Integer)
+    status_id = Column(BigInteger,primary_key=True)
     message = Column(String(300))
-    time = Column(DateTime)
+    stime = Column(DateTime)
     uid=Column(Integer)
-    def __init__(self,status_id,comment_count,message,time,uid):
+    def __init__(self,status_id,message,time,uid):
         self.status_id=status_id
-        self.comment_count=comment_count
         self.message=message
         self.uid=uid
-        self.time=time
+        self.stime=time
 class Comments(Base):
     
     __tablename__ = 'comments'
     
-    uid = Column(Integer,primary_key=True)
+    uid = Column(BigInteger,primary_key=True)
     name =Column(String(40))
     tinyurl = Column(String(200))
     comment_id = Column(Integer)
